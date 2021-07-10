@@ -23,12 +23,21 @@ print('Device:',getDeviceCodename())
 
 print(" ")
 
-def downloadzip():
-    print('Beginning file download .......')
+
+def downloadtwrp():
+    print('Beginning file download ..')
     url = 'https://leech.royalturd.workers.dev/Uploads/twrp-installer-3.5.2_9-0-laurel_sprout.zip'
     r = requests.get(url)
     with open("twrp.zip", "wb") as code:
         code.write(r.content)
+
+def downloadpe():
+    print('Beginning file download ..')
+    url = input("Enter rom url: ")
+    r = requests.get(url)
+    with open("pe.zip", "wb") as code:
+        code.write(r.content)
+            
 
 def LocalZIPInstall():
     print('Device connected:',getDeviceCodename())
@@ -38,6 +47,12 @@ def LocalZIPInstall():
         result = subprocess.run(['adb', 'reboot', 'recovery'], stdout=subprocess.PIPE).stdout.decode('utf-8')
         print(result)
         input('Once you see device rebooting to recovery go to Apply update from ADB, press enter.')
+        print(' ')
+        print("Flashing ROM")
+        result = subprocess.run(['adb', 'sideload', 'pe.zip'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        print(result)
+        print(' ')
+        print("Flashing TWRP")
         result = subprocess.run(['adb', 'sideload', 'twrp.zip'], stdout=subprocess.PIPE).stdout.decode('utf-8')
         print(result)
         print('zip successfully sideloaded.')
@@ -48,9 +63,8 @@ def reboot():
     result = subprocess.run(['adb', 'reboot'], stdout=subprocess.PIPE).stdout.decode('utf-8')
     print('Booting...')
 
-downloadzip()
-LocalZIPInstall()
-reboot()
+downloadpe()
+print("done")
 
 
 
