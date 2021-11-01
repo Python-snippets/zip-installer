@@ -14,6 +14,7 @@ def splash():
     ██╔══╝░░██║██╔═══╝░  ██║██║╚████║░╚═══██╗░░░██║░░░██╔══██║██║░░░░░██║░░░░░██╔══╝░░██╔══██╗
     ███████╗██║██║░░░░░  ██║██║░╚███║██████╔╝░░░██║░░░██║░░██║███████╗███████╗███████╗██║░░██║
     ╚══════╝╚═╝╚═╝░░░░░  ╚═╝╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚══════╝╚══════╝╚═╝░░╚═╝
+                                                                                By @royalturd
 
                                                                                      \n''')
 
@@ -25,8 +26,9 @@ def getDeviceCodename():
 print('Device:',getDeviceCodename())
 
 print(' ')
+
 def downloadtwrp():
-    print('Beginning file download ..')
+    print('Beginning TWRP download ..')
     url = 'https://leech.royalturd.workers.dev/Uploads/twrp-installer-3.5.2_9-0-laurel_sprout.zip'
     r = requests.get(url)
     with open("twrp.zip", "wb") as code:
@@ -34,7 +36,9 @@ def downloadtwrp():
 
 def downloadpe():
     url = input("Enter rom url: ")
-    print('Beginning file download ..')
+    file_name = url.split('/')[-1]
+    print('Beginning download ' + file_name)
+
     with open("pe.zip", "wb") as f:
          response = requests.get(url, stream=True)
          total = response.headers.get('content-length')
@@ -51,6 +55,8 @@ def downloadpe():
                  sys.stdout.write('\r[{}{}]'.format('█' * done, '.' * (50-done)))
                  sys.stdout.flush()
     sys.stdout.write('\n')
+
+print("Download finished")
             
 
 def LocalZIPInstall():
@@ -74,7 +80,7 @@ def installTWRP():
         print("Flashing TWRP")
         result = subprocess.run(['adb', 'sideload', 'twrp.zip'], stdout=subprocess.PIPE).stdout.decode('utf-8')
         print(result)
-        print('TWRP successfully sideloaded.')        
+        print('TWRP successfully sideloaded.')
 
 
 def reboot():
@@ -90,6 +96,3 @@ downloadpe()
 LocalZIPInstall()
 installTWRP()
 reboot()
-
-
- 
